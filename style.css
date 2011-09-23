@@ -747,7 +747,18 @@ color:#666;
 }
 
 
-
+/* Blockquote
+---------------------------------------*/
+blockquote {
+  background-color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid #ccc;
+  -moz-border-radius:5px;
+  -moz-box-shadow:3px 3px 4px #ccc;
+  -webkit-border-radius:5px;
+  -webkit-box-shadow:3px 3px 4px #ccc;
+}
 
 
 /* Pring and Medial styles */
