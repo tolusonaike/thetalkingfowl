@@ -1,7 +1,7 @@
 === thetalkingfowl ===
 Contributors: Tolu Sonaike
 site: http://www.tolusonaike.com
-demo: http://blog.tolusonaike.com
+Theme URL: http://www.tolusonaike.com/thetalkingfowl
 Tags: themes, custom-menu, threaded-comments, sticky-post, microformats, rtl-language-support, translation-ready
 Requires and tested only with: 2.9.2 (for thumbnail functionality)
  
