@@ -82,9 +82,10 @@ margin-top:0;
 }
 
 footer.entry-meta{
-     opacity:0.1;
-     filter:alpha(opacity=10);
-     -moz-opacity:0.1;
+     opacity:0.25;
+     filter:alpha(opacity=25);
+     -moz-opacity:0.25;
+     font-size: 14px;
 }
 
 footer.entry-meta:hover{
