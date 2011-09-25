@@ -82,9 +82,10 @@ margin-top:0;
 }
 
 footer.entry-meta{
-     opacity:0.1;
-     filter:alpha(opacity=10);
-     -moz-opacity:0.1;
+     opacity:0.25;
+     filter:alpha(opacity=25);
+     -moz-opacity:0.25;
+     font-size: 14px;
 }
 
 footer.entry-meta:hover{
@@ -100,6 +101,8 @@ font-style:italic;
 }
 .entry-content p {
     margin:14px 0;
+    font-size: 16px;
+    line-height: 1.5em;
 }
 
 .month-day {
@@ -511,6 +514,14 @@ p img {
 margin-bottom:.5em;
 }
 
+div.entry-thumbnail img, img.aligncenter, img.alignleft {
+/*border: 1px solid #ccc;*/
+-moz-border-radius:5px;
+-moz-box-shadow:3px 3px 4px #ccc;
+-webkit-border-radius:5px;
+-webkit-box-shadow:3px 3px 4px #ccc;
+}
+
 
 /* =Forms
 -------------------------------------------------------------- */
@@ -548,7 +559,7 @@ width:60%;
 }
 
 textarea {
-width:80%;
+width:60%;
 }
 
 
@@ -736,10 +747,21 @@ color:#666;
 }
 
 
+/* Blockquote
+---------------------------------------*/
+blockquote {
+  background-color: #fff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid #ccc;
+  -moz-border-radius:5px;
+  -moz-box-shadow:3px 3px 4px #ccc;
+  -webkit-border-radius:5px;
+  -webkit-box-shadow:3px 3px 4px #ccc;
+}
 
 
-
-/* Pring and Medial styles */
+/* Print and Media styles */
 /*
  * Media queries for responsive design
  * These follow after primary styles so they will successfully override. 
