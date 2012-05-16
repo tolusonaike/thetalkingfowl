@@ -118,7 +118,7 @@ function thetalkingfowl_enqueue_scripts() {
 				 
 				 if ($flickruser){
 				   
-					     wp_enqueue_script('thetalkingfowl_flickrjs'); 	    
+					     //wp_enqueue_script('thetalkingfowl_flickrjs'); 	    
 			 
 				 }
 		      }
@@ -143,7 +143,38 @@ function thetalkingfowl_other_scripts() {
 	if ($flickruser){
 	    
 		if ( !is_admin() && (is_home() || is_front_page()) ) { ?>
-		    <script> loadFlickrImages(<?php echo "'"; ?><?php echo  $flickruser; ?><?php echo "'"; ?>,<?php if ($flickrusernum) echo $flickrusernum; else echo 7; ?>,<?php echo "'"; ?><?php echo  $flickruserset; ?><?php echo "'"; ?>); </script>
+		    <script>
+		        function loadFlickrImages(flickrUser,flickrUsrAmt,flickrUserSet){
+
+			//bring in flickr. if userset isnt specified, display oublic photos
+		   
+				flickrUserSet = typeof(flickrUserSet) != 'undefined' ? flickrUserSet : null;
+		   
+				if (!flickrUserSet){
+				     jQuery.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?id=" + flickrUser + "&lang=en-us&format=json&jsoncallback=?", function (data) {
+						   jQuery("#flickr_update_list").text('');
+						   jQuery.each(data.items, function(i,item){
+		   
+							   jQuery("#flickr_update_list").append("<li><a href='" + item.link + "'>" + "<img src='"+item.media.m.replace("_m", "_s")+"' />" + "</a></li>");
+						   if ( i == flickrUsrAmt) return false;
+						   })
+					   });
+				}
+				else {
+		   
+				    jQuery.getJSON("http://api.flickr.com/services/feeds/photoset.gne?nsid=" + flickrUser + "&set="+flickrUserSet+"&format=json&jsoncallback=?", function (data) {
+					      jQuery("#flickr_update_list").text('');
+					       jQuery.each(data.items, function(i,item){
+		   
+						      jQuery("#flickr_update_list").append("<li><a href='" + item.link + "'>" + "<img src='"+item.media.m.replace("_m", "_s")+"' />" + "</a></li>");
+					       if ( i == flickrUsrAmt) return false;
+					       })
+				       });
+		   
+				}
+		       }
+		    
+		    (function() {loadFlickrImages(<?php echo "'"; ?><?php echo  $flickruser; ?><?php echo "'"; ?>,<?php if ($flickrusernum) echo $flickrusernum; else echo 7; ?>,<?php echo "'"; ?><?php echo  $flickruserset; ?><?php echo "'"; ?>); })();</script>
 <?php		    
 		 }
 		 
