@@ -84,7 +84,6 @@ function thetalkingfowl_register_scripts() {
 	  wp_register_script('thetalkingfowl_dropmenu',get_template_directory_uri() . '/js/menu.js',array('jquery'), false, true);	    
 	  wp_register_script('thetalkingfowl_otherjs',get_template_directory_uri() . '/js/script.js',array('jquery'), false, true);	  
 	  wp_register_script('thetalkingfowl_twitterapi','http://twitter.com/javascripts/blogger.js', false, false, true);	  	  
-	  wp_register_script('thetalkingfowl_flickrjs',get_template_directory_uri() .'/js/flickr.js', false, false, true);
 	  $options =  get_option('thetalkingfowl_theme_options');
 	  $twituser =  wp_filter_nohtml_kses($options['twituser']);
 	  if ($twituser){
@@ -115,12 +114,6 @@ function thetalkingfowl_enqueue_scripts() {
 					     wp_enqueue_script('thetalkingfowl_twittercallback');
 				  }
 				     
-				 
-				 if ($flickruser){
-				   
-					     //wp_enqueue_script('thetalkingfowl_flickrjs'); 	    
-			 
-				 }
 		      }
 	}
 }
