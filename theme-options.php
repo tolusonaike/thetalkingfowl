@@ -36,11 +36,14 @@ function thetalkingfowl_do_page() {
 		<form method="post" action="options.php">
 			<?php settings_fields( 'thetalkingfowl_options' ); ?>
 			<?php $options = get_option( 'thetalkingfowl_theme_options' );
-			      if (!isset($options['twituserdisplay']))
-				$options['twituserdisplay'] = 'plain'; //default option for twit user option
-                              if (!isset($options['postdisplaystyle']))
-				$options['postdisplaystyle'] = 'standard'; //default post diplay option
-
+				if (!isset($options['twituserdisplay']))
+					$options['twituserdisplay'] = 'plain'; //default option for twit user option
+				if (!isset($options['postdisplaystyle']))
+					$options['postdisplaystyle'] = 'standard'; //default post diplay option
+				if (!isset($options['twitincludert']))
+					$options['twitincludert'] = 'true'; //default include retweets
+				if (!isset($options['twitexcludereplies']))
+					$options['twitexcludereplies'] = 'false'; //default include replies
 ?> 
 
 			<table class="form-table">
@@ -66,9 +69,25 @@ function thetalkingfowl_do_page() {
 				<tr valign="top"><th scope="row"><?php _e( 'Twitter user', 'thetalkingfowl' ); ?></th>
 					<td>
 						<input id="thetalkingfowl_theme_options[twituser]" style="width:100px !important" type="text" name="thetalkingfowl_theme_options[twituser]" value="<?php esc_attr_e(isset($options['twituser']) ? $options['twituser'] :'' ); ?>" />
-						<label class="description" for="thetalkingfowl_theme_options[twituser]"><?php _e( '(Leave empty to turn off) View last twit of this user' , 'thetalkingfowl'); ?></label>
+						<label class="description" for="thetalkingfowl_theme_options[twituser]"><?php _e( '(Leave empty to turn off) View last tweet of this user' , 'thetalkingfowl'); ?></label>
 					</td>
-                                </tr>
+				</tr>
+				<tr>
+					<th scope="row"><?php _e( 'Include retweets?', 'thetalkingfowl' ); ?></th>
+					<td>
+						<input id="thetalkingfowl_theme_options[twitincludert]" name="thetalkingfowl_theme_options[twitincludert]" type="radio" value="true" <?php checked( 'true', $options['twitincludert'] ) ?>/> <?php _e( 'Yes', 'thetalkingfowl' ); ?>
+						<input id="thetalkingfowl_theme_options[twitincludert]" name="thetalkingfowl_theme_options[twitincludert]" type="radio" value="false" <?php checked( 'false', $options['twitincludert'] ) ?>/> <?php _e( 'No', 'thetalkingfowl' ); ?>
+						<label class="description" for="thetalkingfowl_theme_options[twitincludert]"><?php _e( '(Default: Yes) Choose whether to include retweets', 'thetalkingfowl' ); ?></label>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><?php _e( 'Exclude replies?', 'thetalkingfowl' ); ?></th>
+					<td>
+						<input id="thetalkingfowl_theme_options[twitexcludereplies]" name="thetalkingfowl_theme_options[twitexcludereplies]" type="radio" value="true" <?php checked( 'true', $options['twitexcludereplies'] ) ?>/> <?php _e( 'Yes', 'thetalkingfowl' ); ?>
+						<input id="thetalkingfowl_theme_options[twitexcludereplies]" name="thetalkingfowl_theme_options[twitexcludereplies]" type="radio" value="false" <?php checked( 'false', $options['twitexcludereplies'] ) ?>/> <?php _e( 'No', 'thetalkingfowl' ); ?>
+						<label class="description" for="thetalkingfowl_theme_options[twitexcludereplies]"><?php _e( '(Default: No) Choose whether to exclude replies (tweets starting with @)', 'thetalkingfowl' ); ?></label>
+					</td>
+				</tr>
                     <?php
 //////////////////////////////////////////   Displays the last twit from twitter user //////////////////////////////////////////  
 ?>
@@ -90,7 +109,7 @@ function thetalkingfowl_do_page() {
 						<label class="description" for="thetalkingfowl_theme_options[flickruser]"><?php _e( '(Leave empty to turn off) View PUBLIC pictures from this user. Click ', 'thetalkingfowl' ); ?><a href="http://idgettr.com/" target="_blank" >here</a> <?php _e( 'to get user ID number. ', 'thetalkingfowl' ); ?></label>
 					</td>
 				</tr>
-                                <tr valign="top"><th scope="row"></th>
+				<tr valign="top"><th scope="row"></th>
 					<td>
 						<input id="thetalkingfowl_theme_options[flickruserset]" style="width:100px !important" type="text" name="thetalkingfowl_theme_options[flickruserset]" value="<?php esc_attr_e( isset($options['flickruserset']) ? $options['flickruserset'] :'' ); ?>" />
 						<label class="description" for="thetalkingfowl_theme_options[flickruserset]"><?php _e( 'View a SET from the user. User id is required' , 'thetalkingfowl'); ?></label>
@@ -117,12 +136,12 @@ function thetalkingfowl_do_page() {
 function thetalkingfowl_validate( $input ) {
 
 	// Say our text option must be safe text with no HTML tags
-        $input['postdisplaystyle'] = wp_filter_nohtml_kses( $input['postdisplaystyle'] );
-		$input['twituser'] = wp_filter_nohtml_kses( $input['twituser'] );
-		$input['twituserdisplay'] = wp_filter_nohtml_kses( $input['twituserdisplay'] );
-		$input['flickruser'] = wp_filter_nohtml_kses( $input['flickruser'] );
-		$input['flickruserset'] = wp_filter_nohtml_kses( $input['flickruserset'] );
-		$input['flickrusernum'] = wp_filter_nohtml_kses( $input['flickrusernum'] );
+	$input['postdisplaystyle'] = wp_filter_nohtml_kses( $input['postdisplaystyle'] );
+	$input['twituser'] = wp_filter_nohtml_kses( $input['twituser'] );
+	$input['twituserdisplay'] = wp_filter_nohtml_kses( $input['twituserdisplay'] );
+	$input['flickruser'] = wp_filter_nohtml_kses( $input['flickruser'] );
+	$input['flickruserset'] = wp_filter_nohtml_kses( $input['flickruserset'] );
+	$input['flickrusernum'] = wp_filter_nohtml_kses( $input['flickrusernum'] );
 
 	return $input;
 }
