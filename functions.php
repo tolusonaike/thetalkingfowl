@@ -86,8 +86,10 @@ function thetalkingfowl_register_scripts() {
 	  wp_register_script('thetalkingfowl_twitterapi','http://twitter.com/javascripts/blogger.js', false, false, true);	  	  
 	  $options =  get_option('thetalkingfowl_theme_options');
 	  $twituser =  wp_filter_nohtml_kses($options['twituser']);
+	  $twitrt = wp_filter_nohtml_kses($options['twitincludert']);
+	  $twitrep = wp_filter_nohtml_kses($options['twitexcludereplies']);
 	  if ($twituser){
-	    wp_register_script('thetalkingfowl_twittercallback','http://twitter.com/statuses/user_timeline/' . $twituser . '.json?callback=twitterCallback2&count=1', false, false, true);
+	    wp_register_script('thetalkingfowl_twittercallback','http://api.twitter.com/1/statuses/user_timeline.json?callback=twitterCallback2&trim_user=true&count=1&screen_name=' . $twituser . '&include_rts=' . $twitrt . '&exclude_replies=' . $twitrep, false, false, true);
 	  }
 
 
