@@ -448,7 +448,7 @@ margin:0 0 1em;
 }
 
 .month {
-background:url("/wp-content/themes/thetalkingfowl/images/timeline_inset.gif") repeat-y scroll 0 0 transparent;
+background:url("images/timeline_inset.gif") repeat-y scroll 0 0 transparent;
 padding-top:10px;
 }
 
