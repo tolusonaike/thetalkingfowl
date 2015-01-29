@@ -1,181 +1,171 @@
 <?php
 /**
- * @package WordPress
- * @subpackage thetalkingfowl
+ * thetalkingfowl functions and definitions
+ *
+ * @package thetalkingfowl
  */
 
 /**
- * 
- * Translations can be filed in the /languages/ directory
- * 
- */
- 
- /**
  * Set the content width based on the theme's design and stylesheet.
- *
- * Used to set the width of images and content. Should be equal to the width the theme
- * is designed for, generally via the style.css stylesheet.
  */
-if ( ! isset( $content_width ) )
-	$content_width = 940;
-
-
-load_theme_textdomain( 'thetalkingfowl', TEMPLATEPATH . '/languages' );
-
-$locale = get_locale();
-$locale_file = TEMPLATEPATH . "/languages/$locale.php";
-if ( is_readable( $locale_file ) )
-	require_once( $locale_file );
-
-///////////////////////////////// This theme uses wp_nav_menu() in one location. ////////////////////////////
-register_nav_menus( array(
-	'primary' => __( 'Primary Menu', 'thetalkingfowl' ),
-) );
-
-
-///////////////////////////////// Add default posts and comments RSS feed links to head /////////////////////////////////
-
-add_theme_support( 'automatic-feed-links' );
-
-///////////////////////////////// Add thumbnail support  /////////////////////////////////
-
-if ( function_exists( 'add_theme_support' ) ) { 
-  add_theme_support( 'post-thumbnails' ); 
-  add_image_size( 'single-post-thumbnail', 640, 9999 ); // Permalink thumbnail size
-  add_image_size( 'loop-post-thumbnail', 940, 9999 ); //  for everything else in the loop
+if ( ! isset( $content_width ) ) {
+	$content_width = 872; /* pixels */
 }
 
+if ( ! function_exists( 'thetalkingfowl_setup' ) ) :
+/**
+ * Sets up theme defaults and registers support for various WordPress features.
+ *
+ * Note that this function is hooked into the after_setup_theme hook, which
+ * runs before the init hook. The init hook is too late for some features, such
+ * as indicating support for post thumbnails.
+ */
+function thetalkingfowl_setup() {
 
-/////////////////////////////////  Get our wp_nav_menu() fallback, wp_page_menu(), to show a home link. /////////////////////////////////
+	/*
+	 * Make theme available for translation.
+	 * Translations can be filed in the /languages/ directory.
+	 * If you're building a theme based on thetalkingfowl, use a find and replace
+	 * to change 'thetalkingfowl' to the name of your theme in all the template files
+	 */
+	load_theme_textdomain( 'thetalkingfowl', get_template_directory() . '/languages' );
 
-function thetalkingfowl_page_menu_args($args) {
-	$args['show_home'] = true;
-	return $args;
-}
+	// Add default posts and comments RSS feed links to head.
+	add_theme_support( 'automatic-feed-links' );
 
-add_filter( 'wp_page_menu_args', 'thetalkingfowl_page_menu_args' );
+	/*
+	 * Enable support for Post Thumbnails on posts and pages.
+	 *
+	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
+	 */
+	add_theme_support( 'post-thumbnails' );
 
-///////////////////////////////// Register widgetized area and update sidebar with default widgets /////////////////////////////////
- 
-function thetalkingfowl_widgets_init() {
-	register_sidebar( array (
-		'name' => __( 'Footer-sidebar 1', 'thetalkingfowl' ),
-		'id' => 'footer-sidebar-1',
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget' => "</aside>",
-		'before_title' => '<h3 class="widget-title">',
-		'after_title' => '</h3>',
+    add_image_size( 'content-thumb', 960, 350, true ); //(cropped)
+
+	// This theme uses wp_nav_menu() in one location.
+	register_nav_menus( array(
+		'primary' => __( 'Primary Menu', 'thetalkingfowl' ),
 	) );
-	
+
+	// Enable support for Post Formats.
+	//add_theme_support( 'post-formats', array( 'aside', 'image', 'video', 'quote', 'link' ) );
+
+    // Enable support for excerpt.
+    add_post_type_support('page', 'excerpt');
+
+	// Setup the WordPress core custom background feature.
+	add_theme_support( 'custom-background', apply_filters( 'thetalkingfowl_custom_background_args', array(
+		'default-color' => 'ededed',
+		'default-image' => '',
+	) ) );
+
+	// Enable support for HTML5 markup.
+	add_theme_support( 'html5', array(
+		'comment-list',
+		'search-form',
+		'comment-form',
+		'gallery',
+		'caption',
+	) );
+
+
+    // Add editor style support
+    add_editor_style( get_stylesheet_uri() );
+
+}
+endif; // thetalkingfowl_setup
+add_action( 'after_setup_theme', 'thetalkingfowl_setup' );
+
+
+function thetalkingfowl_excerpt_length( $length ) {
+    return 20;
+}
+add_filter( 'excerpt_length', 'thetalkingfowl_excerpt_length', 999 );
+
+function  thetalkingfowl_excerpt_more( $more ) {
+    return '';
+}
+add_filter('excerpt_more', 'thetalkingfowl_excerpt_more');
+
+
+/**
+ * Register widget area.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/register_sidebar
+ */
+function thetalkingfowl_widgets_init() {
+	register_sidebar( array(
+		'name'          => __( 'Left Bottom Bar', 'thetalkingfowl' ),
+		'id'            => 'sidebar-1',
+		'description'   => '',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	) );
+
+    register_sidebar( array(
+		'name'          => __( 'Middle Bottom Bar', 'thetalkingfowl' ),
+		'id'            => 'sidebar-2',
+		'description'   => '',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	) );
+
+    register_sidebar( array(
+		'name'          => __( 'Right Botton Bar', 'thetalkingfowl' ),
+		'id'            => 'sidebar-3',
+		'description'   => '',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
+	) );
 }
 add_action( 'widgets_init', 'thetalkingfowl_widgets_init' );
 
+/**
+ * Enqueue scripts and styles.
+ */
+function thetalkingfowl_scripts() {
+    wp_enqueue_style( 'thetalkingfowl-foundation-style', get_template_directory_uri() . '/foundation-icons.css', false, '1.0', 'all' );
 
+	wp_enqueue_style( 'thetalkingfowl-style', get_stylesheet_uri() );
 
+    wp_enqueue_script('jquery');
 
+    wp_enqueue_script( 'thetalkingfowl-dug-js', get_template_directory_uri() . '/js/dug.js', array(), '20120206', false );
 
-///////////////////////////////// action to add inline css from theme options /////////////////////////////////
+	wp_enqueue_script( 'thetalkingfowl-foundation-script', get_template_directory_uri() . '/js/foundation.min.js', array(), '20120206', true );
 
-function thetalkingfowl_register_scripts() { 
-	  ////////////////////////////////////////// load modernizr at the top  //////////////////////////////////////////  
-	  wp_register_script('thetalkingfowl_modernizr',get_template_directory_uri() . '/js/libs/modernizr-1.6.min.js', false, false);
-	  
-	  //////////////////////////////////////////  load other scripts at the bottom  //////////////////////////////////////////  	  	  
-	  wp_register_script('thetalkingfowl_dropmenu',get_template_directory_uri() . '/js/menu.js',array('jquery'), false, true);	    
-	  wp_register_script('thetalkingfowl_otherjs',get_template_directory_uri() . '/js/script.js',array('jquery'), false, true);	  
-	  wp_register_script('thetalkingfowl_twitterapi','http://twitter.com/javascripts/blogger.js', false, false, true);	  	  
-	  $options =  get_option('thetalkingfowl_theme_options');
-	  $twituser =  wp_filter_nohtml_kses($options['twituser']);
-	  $twitrt = wp_filter_nohtml_kses($options['twitincludert']);
-	  $twitrep = wp_filter_nohtml_kses($options['twitexcludereplies']);
-	  if ($twituser){
-	    wp_register_script('thetalkingfowl_twittercallback','http://api.twitter.com/1/statuses/user_timeline.json?callback=twitterCallback2&trim_user=true&count=1&screen_name=' . $twituser . '&include_rts=' . $twitrt . '&exclude_replies=' . $twitrep, false, false, true);
-	  }
+    wp_enqueue_script( 'thetalkingfowl-app-script', get_template_directory_uri() . '/js/app.min.js', array(), '20120206', true );
 
-
-}
-add_action ( 'init', 'thetalkingfowl_register_scripts');
-
-function thetalkingfowl_enqueue_scripts() {
-  
-	wp_enqueue_script('thetalkingfowl_modernizr');	
-	wp_enqueue_script('thetalkingfowl_dropmenu');	
-	wp_enqueue_script('thetalkingfowl_otherjs');
-	if (!is_admin()){
-		      if (is_home() || is_front_page() ) { 
-			   
-			    
-			    //////////////////////////////////////////  sanitize theme options //////////////////////////////////////////  
-			    $options =  get_option('thetalkingfowl_theme_options');
-			    $twituser =  wp_filter_nohtml_kses($options['twituser']);
-			    $flickruser =  wp_filter_nohtml_kses($options['flickruser']);
-			    
-				  if ($twituser){    
-							     
-					     wp_enqueue_script('thetalkingfowl_twitterapi');
-					     wp_enqueue_script('thetalkingfowl_twittercallback');
-				  }
-				     
-		      }
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
 	}
 }
-add_action ( 'wp_enqueue_scripts', 'thetalkingfowl_enqueue_scripts');
+add_action( 'wp_enqueue_scripts', 'thetalkingfowl_scripts' );
 
 
-function thetalkingfowl_other_scripts() {
-	
-	//////////////////////////////////////////  sanitize theme options //////////////////////////////////////////  
-	$options =  get_option('thetalkingfowl_theme_options');
-	$flickruser =  wp_filter_nohtml_kses($options['flickruser']);
-	$flickruserset =  wp_filter_nohtml_kses($options['flickruserset']);
-	$flickrusernum = 7;
-	$tmpflickrusernum =  wp_filter_nohtml_kses($options['flickrusernum']);
-	
-	
-	if ($tmpflickrusernum)
-		$flickrusernum = $tmpflickrusernum - 1;
- 	
-	if ($flickruser){
-	    
-		if ( !is_admin() && (is_home() || is_front_page()) ) { ?>
-		    <script>
-		        function loadFlickrImages(flickrUser,flickrUsrAmt,flickrUserSet){
+/**
+ * Custom template tags for this theme.
+ */
+require get_template_directory() . '/inc/template-tags.php';
 
-			//bring in flickr. if userset isnt specified, display oublic photos
-		   
-				flickrUserSet = typeof(flickrUserSet) != 'undefined' ? flickrUserSet : null;
-		   
-				if (!flickrUserSet){
-				     jQuery.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?id=" + flickrUser + "&lang=en-us&format=json&jsoncallback=?", function (data) {
-						   jQuery("#flickr_update_list").text('');
-						   jQuery.each(data.items, function(i,item){
-		   
-							   jQuery("#flickr_update_list").append("<li><a href='" + item.link + "'>" + "<img src='"+item.media.m.replace("_m", "_s")+"' />" + "</a></li>");
-						   if ( i == flickrUsrAmt) return false;
-						   })
-					   });
-				}
-				else {
-		   
-				    jQuery.getJSON("http://api.flickr.com/services/feeds/photoset.gne?nsid=" + flickrUser + "&set="+flickrUserSet+"&format=json&jsoncallback=?", function (data) {
-					      jQuery("#flickr_update_list").text('');
-					       jQuery.each(data.items, function(i,item){
-		   
-						      jQuery("#flickr_update_list").append("<li><a href='" + item.link + "'>" + "<img src='"+item.media.m.replace("_m", "_s")+"' />" + "</a></li>");
-					       if ( i == flickrUsrAmt) return false;
-					       })
-				       });
-		   
-				}
-		       }
-		    
-		    (function() {loadFlickrImages(<?php echo "'"; ?><?php echo  $flickruser; ?><?php echo "'"; ?>,<?php if ($flickrusernum) echo $flickrusernum; else echo 7; ?>,<?php echo "'"; ?><?php echo  $flickruserset; ?><?php echo "'"; ?>); })();</script>
-<?php		    
-		 }
-		 
+/**
+ * Custom functions that act independently of the theme templates.
+ */
+require get_template_directory() . '/inc/extras.php';
 
-	}
-}
-add_action ( 'wp_footer', 'thetalkingfowl_other_scripts');
+/**
+ * Customizer additions.
+ */
+require get_template_directory() . '/inc/customizer.php';
 
-require_once ( get_stylesheet_directory() . '/theme-options.php' );
+
+/**
+ * Load Foundation Nav walker.
+ */
+require get_template_directory() . '/inc/FoundationNavWalker.class.php';

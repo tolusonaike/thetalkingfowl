@@ -1,38 +1,45 @@
 <?php
 /**
- * @package WordPress
- * @subpackage thetalkingfowl
+ * The template for displaying Search Results pages.
+ *
+ * @package thetalkingfowl
  */
 
 get_header(); ?>
 
-		<section id="primary">
-			<div id="content" role="main" class="grid_12">
+	<section id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
 
-			<?php if ( have_posts() ) : ?>
+		<?php if ( have_posts() ) : ?>
 
-				<header class="page-header">
-					<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'thetalkingfowl' ),
-										'<span>' . get_search_query() . '</span>' ); ?></h1>
-				</header>
+			<header class="page-header">
+				<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'thetalkingfowl' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
+			</header><!-- .page-header -->
 
-				<?php get_template_part( 'loop', 'search' ); ?>
+			<?php /* Start the Loop */ ?>
+			<?php while ( have_posts() ) : the_post(); ?>
 
-			<?php else : ?>
+				<?php
+				/**
+				 * Run the loop for the search to output the results.
+				 * If you want to overload this in a child theme then include a file
+				 * called content-search.php and that will be used instead.
+				 */
+				get_template_part( 'content', 'search' );
+				?>
 
-				<article id="no-post">
-					<header class="entry-header">
-						<h1 class="entry-title"><?php _e( 'Nothing Found', 'thetalkingfowl' ); ?></h1>
-					</header><!-- .entry-header -->
+			<?php endwhile; ?>
 
-					<div class="entry-content">
-						<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'thetalkingfowl' ); ?></p>
-					</div><!-- .entry-content -->
-				</article><!-- #post-0 -->
+			<?php thetalkingfowl_paging_nav(); ?>
 
-			<?php endif; ?>
+		<?php else : ?>
 
-			</div><!-- #content -->
-		</section><!-- #primary -->
+			<?php get_template_part( 'content', 'none' ); ?>
 
+		<?php endif; ?>
+
+		</main><!-- #main -->
+	</section><!-- #primary -->
+
+<?php get_sidebar(); ?>
 <?php get_footer(); ?>

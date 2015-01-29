@@ -1,0 +1,426 @@
+/*
+Theme Name: thetalkingfowl
+Theme URI: http://tolusonaike.com/thetalkingfowl
+Author: Tolu Sonaike
+Author URI: http://www.tolusonaike.com
+Description: A semantic, foundation based, responsive, HTML5, minimal template with theme customizer options, instagram photo feed, and off canvas menu
+Version: 2.0.1
+License: GNU General Public License
+License URI: license.txt
+Text Domain: thetalkingfowl
+Tags: custom-menu, threaded-comments, sticky-post, microformats, rtl-language-support, translation-ready, white
+
+*/
+
+
+/*----------------------------------------------------------------------------------------------------------------------
+>>> GENERATED ZURB FOUNDATION CSS:  DO NOT EDIT THIS SECTION, EDIT THE CUSTOM SECTION OR USE SASS FILES
+----------------------------------------------------------------------------------------------------------------------*/
+
+
+@import "settings";
+
+// Or selectively include components
+@import
+//   "foundation/components/accordion",
+//   "foundation/components/alert-boxes",
+  "foundation/components/block-grid",
+//   "foundation/components/breadcrumbs",
+//   "foundation/components/button-groups",
+//   "foundation/components/buttons",
+//   "foundation/components/clearing",
+//   "foundation/components/dropdown",
+//   "foundation/components/dropdown-buttons",
+//   "foundation/components/flex-video",
+     "foundation/components/forms",
+     "foundation/components/grid",
+//   "foundation/components/inline-lists",
+//   "foundation/components/joyride",
+//   "foundation/components/keystrokes",
+//   "foundation/components/labels",
+//   "foundation/components/magellan",
+//   "foundation/components/orbit",
+//   "foundation/components/pagination",
+//   "foundation/components/panels",
+//   "foundation/components/pricing-tables",
+//   "foundation/components/progress-bars",
+//   "foundation/components/reveal",
+//   "foundation/components/side-nav",
+//   "foundation/components/split-buttons",
+//   "foundation/components/sub-nav",
+//   "foundation/components/switch",
+     "foundation/components/tables",
+//   "foundation/components/tabs",
+//   "foundation/components/thumbs",
+//   "foundation/components/tooltips",
+//   "foundation/components/top-bar",
+//   "foundation/components/type",
+     "foundation/components/offcanvas",
+//   "foundation/components/visibility";
+
+// Fonts
+     "foundation-icons",
+     "librebaskerville";
+
+
+/*
+>>> Custom CSS under this line
+------------------------------------------------------------------------------------------------------------------------
+            |                                             |                                                           |
+            |                                             |                                                           |
+            V                                             V                                                           V
+            V                                             V                                                           V
+
+
+>>> TABLE OF CONTENTS:
+------------------------------------------------------------------------------------------------------------------------
+
+1.0 - Accessibility
+2.0 - Alignments
+3.0 - Posts and Pages
+4.0 - Blocks
+5.0 - General
+6.0 - Structure
+7.0 - navigation
+8.0 - Widgets
+9.0 - Miscellaneous
+----------------------------------------------------------------------------------------------------------------------*/
+
+
+/*--------------------------------------------------------------
+1.0 Accessibility
+--------------------------------------------------------------*/
+/* Text meant only for screen readers */
+.screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.screen-reader-text:hover,
+.screen-reader-text:active,
+.screen-reader-text:focus {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+  clip: auto !important;
+  color: #21759b;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000; /* Above WP toolbar */
+}
+
+/*--------------------------------------------------------------
+2.0 Alignments
+--------------------------------------------------------------*/
+.alignleft {
+  display: inline;
+  float: left;
+  margin-right: 1.5em;
+}
+.alignright {
+  display: inline;
+  float: right;
+  margin-left: 1.5em;
+}
+.aligncenter {
+  clear: both;
+  display: block;
+  margin: 0 auto;
+}
+
+/*--------------------------------------------------------------
+3.0 Posts and Pages
+--------------------------------------------------------------*/
+.sticky {
+  background-color: #FFEB78;
+  padding: 1em 1em 3em;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+
+/*--------------------------------------------------------------
+4.0 Blocks
+--------------------------------------------------------------*/
+
+
+//Comments
+.comment-content a {
+  word-wrap: break-word;
+}
+.bypostauthor {
+  display: inline;
+}
+
+//Captions
+.wp-caption {
+  margin-bottom: 1.5em;
+  max-width: 100%;
+}
+.wp-caption img[class*="wp-image-"] {
+  display: block;
+  margin: 0 auto;
+}
+.wp-caption-text {
+  text-align: center;
+}
+.wp-caption .wp-caption-text {
+  margin: 0.8075em 0;
+}
+
+
+//Galleries
+.gallery {
+  @include grid-row();
+
+}
+
+.page-links,
+.gallery {
+  margin-bottom:1em
+}
+.gallery-item {
+  @include grid-column(2);
+}
+
+.gallery-caption {
+  font-size: 75%;
+}
+.gallery-icon {
+  margin-bottom: 0.5em;
+}
+
+
+
+/*--------------------------------------------------------------
+5.0 General
+--------------------------------------------------------------*/
+h1,h2,h3,h4,h5 {
+  letter-spacing: -1.5px;
+}
+
+a[rel="prev"] {
+  float:left;
+  width:50%
+}
+
+a[rel="next"] {
+  float: right;
+  width:50%;
+  text-align:right;
+}
+
+/*--------------------------------------------------------------
+6.0 Structure
+--------------------------------------------------------------*/
+
+.banner,
+.content,
+.contentinfo{
+  @include grid-row();
+  margin-top: 1em;
+
+}
+
+.contentinfobody{
+  @include grid-column(12);
+  margin-bottom: 2em;
+}
+
+.banner{
+  margin-bottom: 2em;
+  h1 {
+    @include grid-column(12);
+  }
+
+  h4 {
+    @include grid-column(12);
+  }
+
+}
+
+.content section {
+  @include grid-column(12);
+}
+
+.meta{
+  font-size: $small-font-size;
+  line-height: 1.5em;
+}
+
+.comments-area {
+  p {
+    font-size: 1rem
+  }
+  .odd {
+    background-color:#dedede;
+  }
+}
+
+.comment-content a {
+  word-wrap: break-word;
+}
+
+
+article {
+  border-bottom: 1px solid #dedede;
+  margin-bottom: 2em;
+  padding-bottom: 3em;
+  @extend .clearfix;
+
+}
+
+.entry-header {}
+.entry-content { @extend .clearfix; margin-bottom: 1em}
+
+
+.picture-feed {
+  margin-left:-5px;
+}
+.picture-feed img  {
+  border:3px solid #ddd
+}
+
+
+
+.vcard .fn {
+  font-size: inherit;
+}
+
+
+.widget-area {
+  @include grid-column(12);
+
+  @media #{$medium-up} {
+      @include grid-column(4);
+  }
+
+}
+
+.list-tree {
+  position: relative;
+  list-style: none;
+  margin-left: 0;
+}
+
+.list-tree p{
+  color: #444
+}
+
+.list-tree article {
+   border-bottom: 0;
+   margin-bottom: 1em;
+   padding-bottom: 0;
+}
+.list-tree:before {
+  content: '';
+  display: block;
+  width: 4px;
+  top: 10px;
+  bottom: 35px;
+  left: 4px;
+  background-color: #ddd;
+  position: absolute;
+}
+
+
+.list-tree  li {
+  padding-left: 30px;
+  position: relative;
+}
+
+.list-tree li:before {
+  content: '';
+  display: block;
+  width: 12px;
+  height: 12px;
+  top: 9px;
+  left: 0;
+  position: absolute;
+  background-color: #555;
+  -webkit-border-radius: 22px;
+  -moz-border-radius: 22px;
+  border-radius: 22px;
+  border: 2px solid #fff;
+}
+
+.list-tree .post-1 h4 {
+  font-size: $h1-font-size;
+  font-style: italic;
+}
+
+.search-form .search-submit { display:none }
+
+
+/*--------------------------------------------------------------
+7.0 navigation
+--------------------------------------------------------------*/
+.deep-1 {
+  margin-left: 10px
+}
+
+.deep-2 {
+  margin-left: 20px
+}
+
+.off-canvas-list li a {
+  font-size: 90%;
+}
+
+.navigation {
+  @include clearfix;
+  padding-bottom: 2em;
+  margin-bottom: 2em;
+  border-bottom: 1px solid #dedede;
+}
+
+.right-off-canvas-toggle{
+  float:right;
+  font-size: 2em;
+  padding-right:20px;
+  padding-top: 20px;
+}
+
+
+/*--------------------------------------------------------------
+8.0 Widgets
+--------------------------------------------------------------*/
+.widget {
+  margin: 0 0 1.5em;
+}
+
+// Make sure select elements fit in widgets
+.widget select {
+  max-width: 100%;
+}
+
+// Search widget
+.widget_search .search-submit {
+  display: none;
+}
+
+
+/*--------------------------------------------------------------
+9.0 Miscellaneous
+--------------------------------------------------------------*/
+
+// fix for adminbar hanging down below 600px
+@media screen and (max-width: 600px) {
+  #wpadminbar {
+    position: fixed;
+  }
+}
+
+
+

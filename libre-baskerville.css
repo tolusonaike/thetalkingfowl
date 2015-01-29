@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'libre-baskerville';
+  src: url("fonts/[set]_foundicons.eot");
+  src: url("fonts/[set]_foundicons.eot?#iefix") format("embedded-opentype"), url("fonts/[set]_foundicons.woff") format("woff"), url("fonts/[set]_foundicons.ttf") format("truetype"), url("fonts/[set]_foundicons.svg#[set]Foundicons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}

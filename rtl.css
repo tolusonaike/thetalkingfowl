@@ -9,33 +9,9 @@ http://codex.wordpress.org/Right_to_Left_Language_Support
 
 */
 
+/*
 body {
 	direction: rtl;
 	unicode-bidi: embed;
 }
-#access {
-	float: right;
-	margin: 0 auto 1em;
-}
-#access ul {
-	padding-right: 0;
-}
-#access li {
-	float: right;
-}
-#access ul ul {
-	float: right;
-	right: 0;
-	left: auto;
-}
-#access ul ul ul {
-	right: 100%;
-	left: auto;
-}
-#content nav .nav-previous {
-	float: right;
-}
-#content nav .nav-next {
-	float: left;
-	text-align: left;
-}
+*/
